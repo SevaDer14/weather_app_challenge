@@ -6,9 +6,9 @@ import GraphHourlyTemp from "./GraphHourlyTemp";
 
 const getCity = (locationResponse) => {
   if (locationResponse.data.results[0].components.city === undefined) {
-    return locationResponse.data.results[0].components.postal_city;
-  }
-  return locationResponse.data.results[0].components.city;
+    return locationResponse.data.results[0].components.suburb;
+  } else if (locationResponse.data.results[0].components.suburb === undefined)
+  return locationResponse.data.results[0].components.postal_city;
 };
 
 class App extends Component {
@@ -30,7 +30,7 @@ class App extends Component {
         `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=minutely,daily,alerts&units=metric&appid=${openWeatherMapkey}`
       );
       let city = getCity(locationResponse);
-
+        debugger
       this.setState({
         city: city,
         temperature: weatherResponse.data.current.temp,
